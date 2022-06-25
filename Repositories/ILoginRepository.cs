@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace JudoDesktopApp.Repositories
 {
-    public interface IUserRepository
+    public interface ILoginRepository
     {
         Task<bool> IsSignedInAsync(User user);
     }

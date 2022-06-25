@@ -6,8 +6,7 @@ namespace JudoDesktopApp.ViewModels
 {
     public class RegistrationViewModel : ViewModelBase
     {
-
-        private Command signUpCommand;
+        public User User { get; set; }
 
         public RegistrationViewModel()
         {
@@ -15,23 +14,31 @@ namespace JudoDesktopApp.ViewModels
             User = new User();
         }
 
+        private Command signUpCommand;
+
         public ICommand SignUpCommand
         {
             get
             {
                 if (signUpCommand == null)
                 {
-                    signUpCommand = new Command(SignUp);
+                    signUpCommand = new Command(SignUpAsync);
                 }
 
                 return signUpCommand;
             }
         }
 
-        public User User { get; set; }
-
-        private void SignUp()
+        private async void SignUpAsync()
         {
+            if (await RegistrationRepository.IsSignedUpAsync(User))
+            {
+                MessageBox.Inform("Вы создали новый аккаунт");
+            }
+            else
+            {
+                MessageBox.Inform("Введите имя пользователя и пароль");
+            }
         }
     }
 }

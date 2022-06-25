@@ -67,8 +67,10 @@
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Models\Observable\ObservableObject.cs" />
     <Compile Include="Models\Partial\UserPartial.cs" />
-    <Compile Include="Repositories\IUserRepository.cs" />
-    <Compile Include="Repositories\UserRepository.cs" />
+    <Compile Include="Repositories\IRegistrationRepository.cs" />
+    <Compile Include="Repositories\ILoginRepository.cs" />
+    <Compile Include="Repositories\RegistrationRepository.cs" />
+    <Compile Include="Repositories\LoginRepository.cs" />
     <Compile Include="Services\DbContext.cs" />
     <Compile Include="Services\IDbContext.cs" />
     <Compile Include="Services\IMessageBoxService.cs" />

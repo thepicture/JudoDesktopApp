@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace JudoDesktopApp.Repositories
 {
-    public class UserRepository : IUserRepository
+    public class LoginRepository : ILoginRepository
     {
         private readonly IDbContext context;
 
-        public UserRepository(IDbContext context)
+        public LoginRepository(IDbContext context)
         {
             this.context = context;
         }
