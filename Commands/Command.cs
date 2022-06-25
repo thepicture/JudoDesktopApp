@@ -14,7 +14,20 @@ namespace JudoDesktopApp.Commands
             _canExecute = canExecute;
         }
 
+        public Command(Action execute, Func<object, bool> canExecute)
+        {
+            _execute = new Action<object>(obj =>
+            {
+                execute();
+            });
+            _canExecute = canExecute;
+        }
+
         public Command(Action<object> execute) : this(execute, null)
+        {
+        }
+
+        public Command(Action execute) : this(execute, null)
         {
         }
 
@@ -43,11 +56,6 @@ namespace JudoDesktopApp.Commands
         public void Execute(object parameter)
         {
             _execute(parameter);
-        }
-
-        public void Execute()
-        {
-            _execute(null);
         }
     }
 }
