@@ -18,8 +18,11 @@ namespace JudoDesktopApp.ViewModels
 
         #region implementations
         public static readonly IMessageBoxService MessageBox = new MessageBoxService();
+
         public static readonly ILoginRepository LoginRepository = new LoginRepository(new DbContext());
         public static readonly IRegistrationRepository RegistrationRepository = new RegistrationRepository(new DbContext());
+        public static readonly IPasswordRepository PasswordRepository = new PasswordRepository(new DbContext());
+
         public static readonly INavigator Navigator = new Navigator();
         #endregion
 

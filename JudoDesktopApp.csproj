@@ -67,6 +67,8 @@
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Models\Observable\ObservableObject.cs" />
     <Compile Include="Models\Partial\UserPartial.cs" />
+    <Compile Include="Repositories\IPasswordRepository.cs" />
+    <Compile Include="Repositories\PasswordRepository.cs" />
     <Compile Include="Repositories\IRegistrationRepository.cs" />
     <Compile Include="Repositories\ILoginRepository.cs" />
     <Compile Include="Repositories\RegistrationRepository.cs" />
@@ -77,10 +79,14 @@
     <Compile Include="Services\INavigator.cs" />
     <Compile Include="Services\MessageBoxService.cs" />
     <Compile Include="Services\Navigator.cs" />
+    <Compile Include="ViewModels\ForgetPasswordViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\NavigationViewModel.cs" />
     <Compile Include="ViewModels\RegistrationViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="Views\UserControls\ForgetPasswordView.xaml.cs">
+      <DependentUpon>ForgetPasswordView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\UserControls\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
@@ -89,6 +95,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dictionaries\TemplateDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\ForgetPasswordView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

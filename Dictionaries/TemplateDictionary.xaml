@@ -8,4 +8,7 @@
     <DataTemplate DataType="{x:Type viewmodels:RegistrationViewModel}">
         <usercontrols:RegistrationView />
     </DataTemplate>
+    <DataTemplate DataType="{x:Type viewmodels:ForgetPasswordViewModel}">
+        <usercontrols:ForgetPasswordView />
+    </DataTemplate>
 </ResourceDictionary>

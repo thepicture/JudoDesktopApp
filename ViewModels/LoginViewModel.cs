@@ -60,5 +60,25 @@ namespace JudoDesktopApp.ViewModels
         {
             Navigator.Go<RegistrationViewModel>();
         }
+
+        private Command goToForgetPasswordViewModel;
+
+        public ICommand GoToForgetPasswordViewModel
+        {
+            get
+            {
+                if (goToForgetPasswordViewModel == null)
+                {
+                    goToForgetPasswordViewModel = new Command(PerformGoToForgetPasswordViewModel);
+                }
+
+                return goToForgetPasswordViewModel;
+            }
+        }
+
+        private void PerformGoToForgetPasswordViewModel()
+        {
+            Navigator.Go<ForgetPasswordViewModel>();
+        }
     }
 }
