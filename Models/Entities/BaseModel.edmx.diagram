@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="933728f929d142c896331fe2fb418d54" Name="Diagram1">
+        <EntityTypeShape EntityType="JudoBaseModel.AgeCategory" Width="1.5" PointX="0.75" PointY="2.25" />
+        <EntityTypeShape EntityType="JudoBaseModel.Gender" Width="1.5" PointX="0.75" PointY="10.125" />
+        <EntityTypeShape EntityType="JudoBaseModel.Hometown" Width="1.5" PointX="0.75" PointY="7.75" />
+        <EntityTypeShape EntityType="JudoBaseModel.Participant" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="JudoBaseModel.SportsClub" Width="1.5" PointX="0.75" PointY="12.5" />
+        <EntityTypeShape EntityType="JudoBaseModel.User" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="JudoBaseModel.WeightCategory" Width="1.5" PointX="0.75" PointY="5.375" />
+        <AssociationConnector Association="JudoBaseModel.FK_Participant_AgeCategory" />
+        <AssociationConnector Association="JudoBaseModel.FK_Participant_Gender" />
+        <AssociationConnector Association="JudoBaseModel.FK_Participant_Hometown" />
+        <AssociationConnector Association="JudoBaseModel.FK_Participant_SportsClub" />
+        <AssociationConnector Association="JudoBaseModel.FK_Participant_WeightCategory" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
