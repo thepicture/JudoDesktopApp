@@ -1,20 +1,20 @@
 ﻿using JudoDesktopApp.Commands;
 using JudoDesktopApp.Models.Entities;
-using System.Security.Cryptography;
-using System.Text;
 using System.Windows.Input;
 
 namespace JudoDesktopApp.ViewModels
 {
     public class LoginViewModel : ViewModelBase
     {
-
-        private Command signInCommand;
+        public User User { get; set; }
 
         public LoginViewModel()
         {
+            Title = "Окно входа";
             User = new User();
         }
+
+        private Command signInCommand;
 
         public ICommand SignInCommand
         {
@@ -29,8 +29,6 @@ namespace JudoDesktopApp.ViewModels
             }
         }
 
-        public User User { get; set; }
-
         private async void SignInAsync()
         {
             if (await UserRepository.IsSignedInAsync(User))
@@ -41,6 +39,26 @@ namespace JudoDesktopApp.ViewModels
             {
                 MessageBox.Inform("Неверный логин или пароль");
             }
+        }
+
+        private Command goToRegistrationViewModelCommand;
+
+        public ICommand GoToRegistrationViewModelCommand
+        {
+            get
+            {
+                if (goToRegistrationViewModelCommand == null)
+                {
+                    goToRegistrationViewModelCommand = new Command(GoToRegistrationViewModel);
+                }
+
+                return goToRegistrationViewModelCommand;
+            }
+        }
+
+        private void GoToRegistrationViewModel()
+        {
+            Navigator.Go<RegistrationViewModel>();
         }
     }
 }

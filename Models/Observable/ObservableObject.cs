@@ -7,6 +7,11 @@ namespace JudoDesktopApp.Models.Observable
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public void RaisePropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         protected bool SetProperty<T>(ref T field, T newValue, [CallerMemberName] string propertyName = null)
         {
             if (!Equals(field, newValue))

@@ -72,9 +72,12 @@
     <Compile Include="Services\DbContext.cs" />
     <Compile Include="Services\IDbContext.cs" />
     <Compile Include="Services\IMessageBoxService.cs" />
+    <Compile Include="Services\INavigator.cs" />
     <Compile Include="Services\MessageBoxService.cs" />
+    <Compile Include="Services\Navigator.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\NavigationViewModel.cs" />
+    <Compile Include="ViewModels\RegistrationViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\UserControls\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
@@ -87,6 +90,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\UserControls\RegistrationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Windows\NavigationWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -94,6 +101,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Views\UserControls\RegistrationView.xaml.cs">
+      <DependentUpon>RegistrationView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Windows\NavigationWindow.xaml.cs">
       <DependentUpon>NavigationWindow.xaml</DependentUpon>

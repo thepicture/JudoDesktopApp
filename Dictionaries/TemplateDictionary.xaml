@@ -5,4 +5,7 @@
     <DataTemplate DataType="{x:Type viewmodels:LoginViewModel}">
         <usercontrols:LoginView />
     </DataTemplate>
+    <DataTemplate DataType="{x:Type viewmodels:RegistrationViewModel}">
+        <usercontrols:RegistrationView />
+    </DataTemplate>
 </ResourceDictionary>

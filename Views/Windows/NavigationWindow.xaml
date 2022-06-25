@@ -7,7 +7,7 @@
         xmlns:viewmodels="clr-namespace:JudoDesktopApp.ViewModels"
         d:DataContext="{d:DesignInstance Type=viewmodels:NavigationViewModel}"
         mc:Ignorable="d"
-        Title="{Binding ViewModel.Title}"
+        Title="{Binding ElementName=NavigatorFrame, Path=Content.Title}"
         Height="450"
         Width="800"
         MinHeight="450"
@@ -16,11 +16,11 @@
     <Window.DataContext>
         <viewmodels:NavigationViewModel>
             <viewmodels:NavigationViewModel.ViewModel>
-                <viewmodels:LoginViewModel Title="Окно входа"/>
+                <viewmodels:LoginViewModel />
             </viewmodels:NavigationViewModel.ViewModel>
         </viewmodels:NavigationViewModel>
     </Window.DataContext>
-    <Grid>
-        <Frame Content="{Binding ViewModel}" />
-    </Grid>
+    <Frame Name="NavigatorFrame"
+           Content="{Binding ViewModel}"
+           NavigationUIVisibility="Hidden" />
 </Window>
