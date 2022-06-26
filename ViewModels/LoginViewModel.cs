@@ -22,11 +22,16 @@ namespace JudoDesktopApp.ViewModels
             {
                 if (signInCommand == null)
                 {
-                    signInCommand = new Command(SignInAsync);
+                    signInCommand = new Command(SignInAsync, CanSignInExecute);
                 }
 
                 return signInCommand;
             }
+        }
+
+        private bool CanSignInExecute(object _)
+        {
+            return string.IsNullOrEmpty(User.Error);
         }
 
         private async void SignInAsync()
