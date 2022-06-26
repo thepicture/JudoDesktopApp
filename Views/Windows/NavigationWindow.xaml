@@ -12,7 +12,8 @@
         Width="800"
         MinHeight="450"
         MinWidth="800"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        Icon="/Resources/logo.jpg">
     <Window.DataContext>
         <viewmodels:NavigationViewModel>
             <viewmodels:NavigationViewModel.ViewModel>
