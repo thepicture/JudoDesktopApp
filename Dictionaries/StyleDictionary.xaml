@@ -1,6 +1,23 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="clr-namespace:JudoDesktopApp.Controls">
+    <SolidColorBrush x:Key="BaseColor">
+        <SolidColorBrush.Color>
+            <Color R="252"
+                   G="227"
+                   B="0"
+                   A="255" />
+        </SolidColorBrush.Color>
+    </SolidColorBrush>
+    <SolidColorBrush x:Key="BackgroundColor">
+        <SolidColorBrush.Color>
+            <Color R="191"
+                   G="13"
+                   B="62"
+                   A="255" />
+        </SolidColorBrush.Color>
+    </SolidColorBrush>
+
     <ControlTemplate x:Key="ErrorTemplate">
         <StackPanel>
             <Border BorderBrush="Red"
@@ -9,10 +26,8 @@
             </Border>
             <TextBlock Text="{Binding ElementName=AdornedElement, Path= AdornedElement.(Validation.Errors).CurrentItem.ErrorContent}"
                        Foreground="Red"
-                       VerticalAlignment="Top"
-                       FontSize="8"
-                       Margin="-2"
-                       Panel.ZIndex="11"
+                       FontSize="10"
+                       Margin="0,-2,0,0"
                        HorizontalAlignment="Left" />
         </StackPanel>
     </ControlTemplate>
@@ -45,5 +60,10 @@
                 Value="{StaticResource ErrorTemplate}" />
     </Style>
     <Style TargetType="Button"
+           BasedOn="{StaticResource {x:Type FrameworkElement}}">
+        <Setter Property="Background"
+                Value="{StaticResource BaseColor}" />
+    </Style>
+    <Style TargetType="Image"
            BasedOn="{StaticResource {x:Type FrameworkElement}}" />
 </ResourceDictionary>

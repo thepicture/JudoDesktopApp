@@ -21,7 +21,23 @@
             </viewmodels:NavigationViewModel.ViewModel>
         </viewmodels:NavigationViewModel>
     </Window.DataContext>
-    <Frame Name="NavigatorFrame"
-           Content="{Binding ViewModel}"
-           NavigationUIVisibility="Hidden" />
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid Background="{StaticResource BackgroundColor}">
+            <Image Source="/Resources/logo.jpg"
+                   Height="50"
+                   HorizontalAlignment="Left" />
+            <TextBlock Text="{Binding ElementName=NavigatorFrame, Path=Content.Title}"
+                       HorizontalAlignment="Center"
+                       Foreground="White"
+                       FontSize="18" />
+        </Grid>
+        <Frame Name="NavigatorFrame"
+               Content="{Binding ViewModel}"
+               NavigationUIVisibility="Hidden"
+               Grid.Row="1" />
+    </Grid>
 </Window>
