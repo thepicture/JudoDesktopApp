@@ -14,4 +14,7 @@
     <DataTemplate DataType="{x:Type viewmodels:ChangePasswordViewModel}">
         <usercontrols:ChangePasswordView />
     </DataTemplate>
+    <DataTemplate DataType="{x:Type viewmodels:ManagementViewModel}">
+        <usercontrols:ManagementView />
+    </DataTemplate>
 </ResourceDictionary>

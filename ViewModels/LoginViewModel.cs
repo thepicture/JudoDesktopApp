@@ -39,6 +39,7 @@ namespace JudoDesktopApp.ViewModels
             if (await LoginRepository.IsSignedInAsync(User))
             {
                 MessageBox.Inform("Вы авторизованы");
+                Navigator.Go<ManagementViewModel>();
             }
             else
             {

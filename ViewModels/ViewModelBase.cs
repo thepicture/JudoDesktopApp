@@ -2,6 +2,7 @@
 using JudoDesktopApp.Models.Observable;
 using JudoDesktopApp.Repositories;
 using JudoDesktopApp.Services;
+using System.Windows;
 using System.Windows.Input;
 
 namespace JudoDesktopApp.ViewModels
@@ -44,6 +45,29 @@ namespace JudoDesktopApp.ViewModels
         private void GoBack()
         {
             Navigator.GoBack();
+        }
+
+
+
+        private Command closeAppCommand;
+
+        public ICommand CloseAppCommand
+        {
+            get
+            {
+                if (closeAppCommand == null)
+                {
+                    closeAppCommand = new Command(CloseApp);
+                }
+
+                return closeAppCommand;
+            }
+        }
+
+        private void CloseApp()
+        {
+            if (MessageBox.Ask("Закрыть приложение?"))
+                Application.Current.Shutdown();
         }
     }
 }

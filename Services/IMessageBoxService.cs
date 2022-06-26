@@ -3,5 +3,6 @@
     public interface IMessageBoxService
     {
         void Inform(string information);
+        bool Ask(string question);
     }
 }
