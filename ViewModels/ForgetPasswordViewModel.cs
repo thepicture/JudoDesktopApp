@@ -22,11 +22,16 @@ namespace JudoDesktopApp.ViewModels
             {
                 if (changePasswordCommand == null)
                 {
-                    changePasswordCommand = new Command(ChangePasswordAsync);
+                    changePasswordCommand = new Command(ChangePasswordAsync, CanChangePasswordExecute);
                 }
 
                 return changePasswordCommand;
             }
+        }
+
+        private bool CanChangePasswordExecute(object arg)
+        {
+            return string.IsNullOrEmpty(User.Error);
         }
 
         private async void ChangePasswordAsync()

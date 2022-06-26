@@ -1,5 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace JudoDesktopApp.Views.UserControls
 {
@@ -11,11 +10,6 @@ namespace JudoDesktopApp.Views.UserControls
         public RegistrationView()
         {
             InitializeComponent();
-        }
-
-        private void OnPasswordChanged(object sender, RoutedEventArgs e)
-        {
-            ((dynamic)DataContext).User.PlainPassword = (sender as PasswordBox).Password;
         }
     }
 }
