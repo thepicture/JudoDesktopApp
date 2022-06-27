@@ -1,5 +1,4 @@
-﻿using JudoDesktopApp.ViewModels;
-using System;
+﻿using System;
 using System.Windows;
 
 namespace JudoDesktopApp.Services
@@ -16,9 +15,11 @@ namespace JudoDesktopApp.Services
 
         public void Go<T>()
         {
-            ViewModelBase viewModel = (ViewModelBase)Activator.CreateInstance(typeof(T));
-            ((NavigationWindow)Application.Current.MainWindow).NavigatorFrame.Navigate(viewModel);
-            Navigated?.Invoke();
+            var viewModel = Activator.CreateInstance(typeof(T));
+            if (((NavigationWindow)Application.Current.MainWindow).NavigatorFrame.Navigate(viewModel))
+            {
+                Navigated?.Invoke();
+            }
         }
 
         public bool IsCanGoBack()

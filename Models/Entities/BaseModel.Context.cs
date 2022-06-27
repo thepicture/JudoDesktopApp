@@ -26,8 +26,8 @@ namespace JudoDesktopApp.Models.Entities
         }
     
         public virtual DbSet<AgeCategory> AgeCategories { get; set; }
+        public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<Gender> Genders { get; set; }
-        public virtual DbSet<Hometown> Hometowns { get; set; }
         public virtual DbSet<Participant> Participants { get; set; }
         public virtual DbSet<SportsClub> SportsClubs { get; set; }
         public virtual DbSet<User> Users { get; set; }

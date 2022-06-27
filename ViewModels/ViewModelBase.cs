@@ -13,12 +13,11 @@ namespace JudoDesktopApp.ViewModels
 
         public string Title { get => title; set => SetProperty(ref title, value); }
 
-        private ViewModelBase viewModel;
-
-        public ViewModelBase ViewModel { get => viewModel; set => SetProperty(ref viewModel, value); }
+        public static ViewModelBase ViewModel { get; set; }
 
         #region implementations
         public static readonly IMessageBoxService MessageBox = new MessageBoxService();
+        public static readonly DbContext DbContext = new DbContext();
 
         public static readonly ILoginRepository LoginRepository = new LoginRepository(new DbContext());
         public static readonly IRegistrationRepository RegistrationRepository = new RegistrationRepository(new DbContext());

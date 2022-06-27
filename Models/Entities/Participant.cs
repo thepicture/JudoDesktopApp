@@ -18,17 +18,17 @@ namespace JudoDesktopApp.Models.Entities
         public string LastName { get; set; }
         public string FirstName { get; set; }
         public int GenderId { get; set; }
-        public System.DateTime BirthDate { get; set; }
-        public Nullable<int> SportsClubId { get; set; }
         public string PostCode { get; set; }
-        public int HometownId { get; set; }
+        public System.DateTime BirthDate { get; set; }
+        public int SportsClubId { get; set; }
+        public int CityId { get; set; }
         public decimal WeightInPounds { get; set; }
-        public int WeightCategoryId { get; set; }
-        public int AgeCategoryId { get; set; }
+        public Nullable<int> WeightCategoryId { get; set; }
+        public Nullable<int> AgeCategoryId { get; set; }
     
         public virtual AgeCategory AgeCategory { get; set; }
+        public virtual City City { get; set; }
         public virtual Gender Gender { get; set; }
-        public virtual Hometown Hometown { get; set; }
         public virtual SportsClub SportsClub { get; set; }
         public virtual WeightCategory WeightCategory { get; set; }
     }

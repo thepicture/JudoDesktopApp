@@ -12,6 +12,13 @@
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="256" Nullable="false" />
         </EntityType>
+        <EntityType Name="City">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
         <EntityType Name="Gender">
           <Key>
             <PropertyRef Name="Id" />
@@ -19,28 +26,21 @@
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="256" Nullable="false" />
         </EntityType>
-        <EntityType Name="Hometown">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="Title" Type="nvarchar" MaxLength="128" Nullable="false" />
-        </EntityType>
         <EntityType Name="Participant">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="LastName" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="FirstName" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="GenderId" Type="int" Nullable="false" />
+          <Property Name="PostCode" Type="nvarchar" MaxLength="6" Nullable="false" />
           <Property Name="BirthDate" Type="date" Nullable="false" />
-          <Property Name="SportsClubId" Type="int" />
-          <Property Name="PostCode" Type="nvarchar" MaxLength="16" Nullable="false" />
-          <Property Name="HometownId" Type="int" Nullable="false" />
+          <Property Name="SportsClubId" Type="int" Nullable="false" />
+          <Property Name="CityId" Type="int" Nullable="false" />
           <Property Name="WeightInPounds" Type="decimal" Precision="20" Scale="1" Nullable="false" />
-          <Property Name="WeightCategoryId" Type="int" Nullable="false" />
-          <Property Name="AgeCategoryId" Type="int" Nullable="false" />
+          <Property Name="WeightCategoryId" Type="int" />
+          <Property Name="AgeCategoryId" Type="int" />
         </EntityType>
         <EntityType Name="SportsClub">
           <Key>
@@ -55,7 +55,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="PasswordHash" Type="varbinary" MaxLength="1024" Nullable="false" />
+          <Property Name="PasswordHash" Type="varbinary" MaxLength="128" Nullable="false" />
         </EntityType>
         <EntityType Name="WeightCategory">
           <Key>
@@ -65,7 +65,7 @@
           <Property Name="Title" Type="nvarchar" MaxLength="256" Nullable="false" />
         </EntityType>
         <Association Name="FK_Participant_AgeCategory">
-          <End Role="AgeCategory" Type="Self.AgeCategory" Multiplicity="1" />
+          <End Role="AgeCategory" Type="Self.AgeCategory" Multiplicity="0..1" />
           <End Role="Participant" Type="Self.Participant" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AgeCategory">
@@ -73,6 +73,18 @@
             </Principal>
             <Dependent Role="Participant">
               <PropertyRef Name="AgeCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Participant_City">
+          <End Role="City" Type="Self.City" Multiplicity="1" />
+          <End Role="Participant" Type="Self.Participant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Participant">
+              <PropertyRef Name="CityId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -88,20 +100,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Participant_Hometown">
-          <End Role="Hometown" Type="Self.Hometown" Multiplicity="1" />
-          <End Role="Participant" Type="Self.Participant" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Hometown">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Participant">
-              <PropertyRef Name="HometownId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Participant_SportsClub">
-          <End Role="SportsClub" Type="Self.SportsClub" Multiplicity="0..1" />
+          <End Role="SportsClub" Type="Self.SportsClub" Multiplicity="1" />
           <End Role="Participant" Type="Self.Participant" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SportsClub">
@@ -113,7 +113,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Participant_WeightCategory">
-          <End Role="WeightCategory" Type="Self.WeightCategory" Multiplicity="1" />
+          <End Role="WeightCategory" Type="Self.WeightCategory" Multiplicity="0..1" />
           <End Role="Participant" Type="Self.Participant" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="WeightCategory">
@@ -126,8 +126,8 @@
         </Association>
         <EntityContainer Name="JudoBaseModelStoreContainer">
           <EntitySet Name="AgeCategory" EntityType="Self.AgeCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Gender" EntityType="Self.Gender" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Hometown" EntityType="Self.Hometown" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Participant" EntityType="Self.Participant" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SportsClub" EntityType="Self.SportsClub" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
@@ -136,12 +136,12 @@
             <End Role="AgeCategory" EntitySet="AgeCategory" />
             <End Role="Participant" EntitySet="Participant" />
           </AssociationSet>
-          <AssociationSet Name="FK_Participant_Gender" Association="Self.FK_Participant_Gender">
-            <End Role="Gender" EntitySet="Gender" />
+          <AssociationSet Name="FK_Participant_City" Association="Self.FK_Participant_City">
+            <End Role="City" EntitySet="City" />
             <End Role="Participant" EntitySet="Participant" />
           </AssociationSet>
-          <AssociationSet Name="FK_Participant_Hometown" Association="Self.FK_Participant_Hometown">
-            <End Role="Hometown" EntitySet="Hometown" />
+          <AssociationSet Name="FK_Participant_Gender" Association="Self.FK_Participant_Gender">
+            <End Role="Gender" EntitySet="Gender" />
             <End Role="Participant" EntitySet="Participant" />
           </AssociationSet>
           <AssociationSet Name="FK_Participant_SportsClub" Association="Self.FK_Participant_SportsClub">
@@ -159,8 +159,8 @@
       <Schema Namespace="JudoBaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="JudoBaseEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="AgeCategories" EntityType="JudoBaseModel.AgeCategory" />
+          <EntitySet Name="Cities" EntityType="JudoBaseModel.City" />
           <EntitySet Name="Genders" EntityType="JudoBaseModel.Gender" />
-          <EntitySet Name="Hometowns" EntityType="JudoBaseModel.Hometown" />
           <EntitySet Name="Participants" EntityType="JudoBaseModel.Participant" />
           <EntitySet Name="SportsClubs" EntityType="JudoBaseModel.SportsClub" />
           <EntitySet Name="Users" EntityType="JudoBaseModel.User" />
@@ -169,12 +169,12 @@
             <End Role="AgeCategory" EntitySet="AgeCategories" />
             <End Role="Participant" EntitySet="Participants" />
           </AssociationSet>
-          <AssociationSet Name="FK_Participant_Gender" Association="JudoBaseModel.FK_Participant_Gender">
-            <End Role="Gender" EntitySet="Genders" />
+          <AssociationSet Name="FK_Participant_City" Association="JudoBaseModel.FK_Participant_City">
+            <End Role="City" EntitySet="Cities" />
             <End Role="Participant" EntitySet="Participants" />
           </AssociationSet>
-          <AssociationSet Name="FK_Participant_Hometown" Association="JudoBaseModel.FK_Participant_Hometown">
-            <End Role="Hometown" EntitySet="Hometowns" />
+          <AssociationSet Name="FK_Participant_Gender" Association="JudoBaseModel.FK_Participant_Gender">
+            <End Role="Gender" EntitySet="Genders" />
             <End Role="Participant" EntitySet="Participants" />
           </AssociationSet>
           <AssociationSet Name="FK_Participant_SportsClub" Association="JudoBaseModel.FK_Participant_SportsClub">
@@ -194,6 +194,14 @@
           <Property Name="Title" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Participants" Relationship="JudoBaseModel.FK_Participant_AgeCategory" FromRole="AgeCategory" ToRole="Participant" />
         </EntityType>
+        <EntityType Name="City">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Participants" Relationship="JudoBaseModel.FK_Participant_City" FromRole="City" ToRole="Participant" />
+        </EntityType>
         <EntityType Name="Gender">
           <Key>
             <PropertyRef Name="Id" />
@@ -202,32 +210,24 @@
           <Property Name="Title" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Participants" Relationship="JudoBaseModel.FK_Participant_Gender" FromRole="Gender" ToRole="Participant" />
         </EntityType>
-        <EntityType Name="Hometown">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Title" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Participants" Relationship="JudoBaseModel.FK_Participant_Hometown" FromRole="Hometown" ToRole="Participant" />
-        </EntityType>
         <EntityType Name="Participant">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="LastName" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="FirstName" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="GenderId" Type="Int32" Nullable="false" />
+          <Property Name="PostCode" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
           <Property Name="BirthDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="SportsClubId" Type="Int32" />
-          <Property Name="PostCode" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="true" />
-          <Property Name="HometownId" Type="Int32" Nullable="false" />
+          <Property Name="SportsClubId" Type="Int32" Nullable="false" />
+          <Property Name="CityId" Type="Int32" Nullable="false" />
           <Property Name="WeightInPounds" Type="Decimal" Nullable="false" Precision="20" Scale="1" />
-          <Property Name="WeightCategoryId" Type="Int32" Nullable="false" />
-          <Property Name="AgeCategoryId" Type="Int32" Nullable="false" />
+          <Property Name="WeightCategoryId" Type="Int32" />
+          <Property Name="AgeCategoryId" Type="Int32" />
           <NavigationProperty Name="AgeCategory" Relationship="JudoBaseModel.FK_Participant_AgeCategory" FromRole="Participant" ToRole="AgeCategory" />
+          <NavigationProperty Name="City" Relationship="JudoBaseModel.FK_Participant_City" FromRole="Participant" ToRole="City" />
           <NavigationProperty Name="Gender" Relationship="JudoBaseModel.FK_Participant_Gender" FromRole="Participant" ToRole="Gender" />
-          <NavigationProperty Name="Hometown" Relationship="JudoBaseModel.FK_Participant_Hometown" FromRole="Participant" ToRole="Hometown" />
           <NavigationProperty Name="SportsClub" Relationship="JudoBaseModel.FK_Participant_SportsClub" FromRole="Participant" ToRole="SportsClub" />
           <NavigationProperty Name="WeightCategory" Relationship="JudoBaseModel.FK_Participant_WeightCategory" FromRole="Participant" ToRole="WeightCategory" />
         </EntityType>
@@ -245,7 +245,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserName" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="PasswordHash" Type="Binary" Nullable="false" MaxLength="1024" FixedLength="false" />
+          <Property Name="PasswordHash" Type="Binary" Nullable="false" MaxLength="128" FixedLength="false" />
         </EntityType>
         <EntityType Name="WeightCategory">
           <Key>
@@ -256,7 +256,7 @@
           <NavigationProperty Name="Participants" Relationship="JudoBaseModel.FK_Participant_WeightCategory" FromRole="WeightCategory" ToRole="Participant" />
         </EntityType>
         <Association Name="FK_Participant_AgeCategory">
-          <End Type="JudoBaseModel.AgeCategory" Role="AgeCategory" Multiplicity="1" />
+          <End Type="JudoBaseModel.AgeCategory" Role="AgeCategory" Multiplicity="0..1" />
           <End Type="JudoBaseModel.Participant" Role="Participant" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AgeCategory">
@@ -264,6 +264,18 @@
             </Principal>
             <Dependent Role="Participant">
               <PropertyRef Name="AgeCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Participant_City">
+          <End Type="JudoBaseModel.City" Role="City" Multiplicity="1" />
+          <End Type="JudoBaseModel.Participant" Role="Participant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Participant">
+              <PropertyRef Name="CityId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -279,20 +291,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Participant_Hometown">
-          <End Type="JudoBaseModel.Hometown" Role="Hometown" Multiplicity="1" />
-          <End Type="JudoBaseModel.Participant" Role="Participant" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Hometown">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Participant">
-              <PropertyRef Name="HometownId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Participant_SportsClub">
-          <End Type="JudoBaseModel.SportsClub" Role="SportsClub" Multiplicity="0..1" />
+          <End Type="JudoBaseModel.SportsClub" Role="SportsClub" Multiplicity="1" />
           <End Type="JudoBaseModel.Participant" Role="Participant" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SportsClub">
@@ -304,7 +304,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Participant_WeightCategory">
-          <End Type="JudoBaseModel.WeightCategory" Role="WeightCategory" Multiplicity="1" />
+          <End Type="JudoBaseModel.WeightCategory" Role="WeightCategory" Multiplicity="0..1" />
           <End Type="JudoBaseModel.Participant" Role="Participant" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="WeightCategory">
@@ -329,17 +329,17 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Genders">
-            <EntityTypeMapping TypeName="JudoBaseModel.Gender">
-              <MappingFragment StoreEntitySet="Gender">
+          <EntitySetMapping Name="Cities">
+            <EntityTypeMapping TypeName="JudoBaseModel.City">
+              <MappingFragment StoreEntitySet="City">
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Hometowns">
-            <EntityTypeMapping TypeName="JudoBaseModel.Hometown">
-              <MappingFragment StoreEntitySet="Hometown">
+          <EntitySetMapping Name="Genders">
+            <EntityTypeMapping TypeName="JudoBaseModel.Gender">
+              <MappingFragment StoreEntitySet="Gender">
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -351,10 +351,10 @@
                 <ScalarProperty Name="AgeCategoryId" ColumnName="AgeCategoryId" />
                 <ScalarProperty Name="WeightCategoryId" ColumnName="WeightCategoryId" />
                 <ScalarProperty Name="WeightInPounds" ColumnName="WeightInPounds" />
-                <ScalarProperty Name="HometownId" ColumnName="HometownId" />
-                <ScalarProperty Name="PostCode" ColumnName="PostCode" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
                 <ScalarProperty Name="SportsClubId" ColumnName="SportsClubId" />
                 <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+                <ScalarProperty Name="PostCode" ColumnName="PostCode" />
                 <ScalarProperty Name="GenderId" ColumnName="GenderId" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />

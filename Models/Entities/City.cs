@@ -12,10 +12,10 @@ namespace JudoDesktopApp.Models.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class Hometown
+    public partial class City
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Hometown()
+        public City()
         {
             this.Participants = new HashSet<Participant>();
         }

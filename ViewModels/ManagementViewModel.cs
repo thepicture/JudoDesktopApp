@@ -9,5 +9,25 @@ namespace JudoDesktopApp.ViewModels
         {
             Title = "Окно управления";
         }
+
+        private Command goToParticipantsCommand;
+
+        public ICommand GoToParticipantsCommand
+        {
+            get
+            {
+                if (goToParticipantsCommand == null)
+                {
+                    goToParticipantsCommand = new Command(GoToParticipants);
+                }
+
+                return goToParticipantsCommand;
+            }
+        }
+
+        private void GoToParticipants()
+        {
+            Navigator.Go<ParticipantsViewModel>();
+        }
     }
 }

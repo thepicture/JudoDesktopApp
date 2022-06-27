@@ -69,6 +69,9 @@
     <Compile Include="Controls\BindablePasswordBox.xaml.cs">
       <DependentUpon>BindablePasswordBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entities\City.cs">
+      <DependentUpon>BaseModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Observable\ObservableObject.cs" />
     <Compile Include="Models\Partial\UserPartial.cs" />
     <Compile Include="Repositories\IPasswordRepository.cs" />
@@ -82,12 +85,15 @@
     <Compile Include="Services\IMessageBoxService.cs" />
     <Compile Include="Services\INavigator.cs" />
     <Compile Include="Services\MessageBoxService.cs" />
+    <Compile Include="Models\Import\ImportResult.cs" />
     <Compile Include="Services\Navigator.cs" />
+    <Compile Include="Services\ParticipantImporter.cs" />
     <Compile Include="ViewModels\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModels\ForgetPasswordViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\ManagementViewModel.cs" />
     <Compile Include="ViewModels\NavigationViewModel.cs" />
+    <Compile Include="ViewModels\ParticipantsViewModel.cs" />
     <Compile Include="ViewModels\RegistrationViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\UserControls\ChangePasswordView.xaml.cs">
@@ -123,6 +129,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\UserControls\ParticipantsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\UserControls\RegistrationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -137,6 +147,9 @@
     </Compile>
     <Compile Include="Views\UserControls\ManagementView.xaml.cs">
       <DependentUpon>ManagementView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\ParticipantsView.xaml.cs">
+      <DependentUpon>ParticipantsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserControls\RegistrationView.xaml.cs">
       <DependentUpon>RegistrationView.xaml</DependentUpon>
@@ -170,9 +183,6 @@
       <DependentUpon>BaseModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\Gender.cs">
-      <DependentUpon>BaseModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Entities\Hometown.cs">
       <DependentUpon>BaseModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\Participant.cs">
