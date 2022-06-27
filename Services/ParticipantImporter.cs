@@ -108,18 +108,26 @@ namespace JudoDesktopApp.Services
                     entities.SaveChanges();
                     participant.CityId = hometown.Id;
                 }
+                else
+                {
+                    participant.CityId = entities.Cities.First(c => c.Title == cityTitle).Id;
+                }
 
-                string sportsClubtitle = string
+                string clubTitle = string
                     .Join(" ", values[6].Split(new string[] { " " }, StringSplitOptions.None).Reverse().Skip(1).Reverse());
-                if (!entities.SportsClubs.Any(c => c.Title == sportsClubtitle))
+                if (!entities.SportsClubs.Any(c => c.Title == clubTitle))
                 {
                     SportsClub club = new SportsClub
                     {
-                        Title = sportsClubtitle
+                        Title = clubTitle
                     };
                     entities.SportsClubs.Add(club);
                     entities.SaveChanges();
                     participant.SportsClubId = club.Id;
+                }
+                else
+                {
+                    participant.SportsClubId = entities.SportsClubs.First(s => s.Title == clubTitle).Id;
                 }
 
                 entities.Participants.Add(participant);
