@@ -9,6 +9,14 @@ namespace JudoDesktopApp.ViewModels
 {
     public class ViewModelBase : ObservableObject
     {
+
+
+        public bool IsBusy
+        {
+            get => isBusy;
+            set => SetProperty(ref isBusy, value);
+        }
+
         private string title;
 
         public string Title { get => title; set => SetProperty(ref title, value); }
@@ -49,6 +57,7 @@ namespace JudoDesktopApp.ViewModels
 
 
         private Command closeAppCommand;
+        private bool isBusy;
 
         public ICommand CloseAppCommand
         {

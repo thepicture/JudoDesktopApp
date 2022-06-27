@@ -5,13 +5,13 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="933728f929d142c896331fe2fb418d54" Name="Diagram1">
-        <EntityTypeShape EntityType="JudoBaseModel.AgeCategory" Width="1.5" PointX="0.75" PointY="2.25" />
-        <EntityTypeShape EntityType="JudoBaseModel.City" Width="1.5" PointX="0.75" PointY="12.5" />
-        <EntityTypeShape EntityType="JudoBaseModel.Gender" Width="1.5" PointX="0.75" PointY="7.75" />
+        <EntityTypeShape EntityType="JudoBaseModel.AgeCategory" Width="1.5" PointX="0.75" PointY="5.375" />
+        <EntityTypeShape EntityType="JudoBaseModel.City" Width="1.5" PointX="0.75" PointY="7.75" />
+        <EntityTypeShape EntityType="JudoBaseModel.Gender" Width="1.5" PointX="0.75" PointY="12.5" />
         <EntityTypeShape EntityType="JudoBaseModel.Participant" Width="1.5" PointX="3" PointY="1" />
-        <EntityTypeShape EntityType="JudoBaseModel.SportsClub" Width="1.5" PointX="0.75" PointY="5.375" />
-        <EntityTypeShape EntityType="JudoBaseModel.User" Width="1.5" PointX="5.75" PointY="3.75" />
-        <EntityTypeShape EntityType="JudoBaseModel.WeightCategory" Width="1.5" PointX="0.75" PointY="10.125" />
+        <EntityTypeShape EntityType="JudoBaseModel.SportsClub" Width="1.5" PointX="0.75" PointY="10.125" />
+        <EntityTypeShape EntityType="JudoBaseModel.User" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="JudoBaseModel.WeightCategory" Width="1.5" PointX="0.75" PointY="2.25" />
         <AssociationConnector Association="JudoBaseModel.FK_Participant_AgeCategory" />
         <AssociationConnector Association="JudoBaseModel.FK_Participant_City" />
         <AssociationConnector Association="JudoBaseModel.FK_Participant_Gender" />

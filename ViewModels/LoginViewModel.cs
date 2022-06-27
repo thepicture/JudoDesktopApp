@@ -1,5 +1,6 @@
 ﻿using JudoDesktopApp.Commands;
 using JudoDesktopApp.Models.Entities;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace JudoDesktopApp.ViewModels
@@ -31,10 +32,17 @@ namespace JudoDesktopApp.ViewModels
 
         private bool CanSignInExecute(object _)
         {
-            return string.IsNullOrEmpty(User.Error);
+            return string.IsNullOrEmpty(User.Error) && !IsBusy;
         }
 
         private async void SignInAsync()
+        {
+            IsBusy = true;
+            await AddUserToLoginRepository();
+            IsBusy = false;
+        }
+
+        private async Task AddUserToLoginRepository()
         {
             if (await LoginRepository.IsSignedInAsync(User))
             {
