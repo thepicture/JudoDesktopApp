@@ -53,12 +53,9 @@ namespace JudoDesktopApp.Services
 
         private ImportResult ParseSemicolonSeparatedFile(string fileName)
         {
-            throw new NotImplementedException();
-        }
-
-        private ImportResult ParseCommaSeparatedFile(string fileName)
-        {
-            string[] lines = File.ReadAllLines(fileName);
+            string[] lines = File.ReadAllLines(fileName)
+                .Skip(1)
+                .ToArray();
 
             int recordsCount = lines.Length;
             int importedRecordsCount = 0;
@@ -67,7 +64,7 @@ namespace JudoDesktopApp.Services
             {
                 try
                 {
-                    ExtractValuesFromFile(line);
+                    ExtractValuesFromSemicolonFile(line);
                     ++importedRecordsCount;
                 }
                 catch (Exception)
@@ -82,7 +79,85 @@ namespace JudoDesktopApp.Services
             };
         }
 
-        private static void ExtractValuesFromFile(string line)
+        private void ExtractValuesFromSemicolonFile(string line)
+        {
+            using (JudoBaseEntities entities = new JudoBaseEntities())
+            {
+                string[] values = line.Split(';');
+                Participant participant = new Participant
+                {
+                    FirstName = values[1].Split(',')[1].Trim(),
+                    LastName = values[1].Split(',')[0].Trim(),
+                    GenderId = values[2].Trim() == "m" ? 1 : 2,
+                    BirthDate = DateTime.ParseExact(values[3].Trim(), "dd.MM.yyyy", CultureInfo.InvariantCulture),
+                    PostCode = values[6].Split(new string[] { " " }, StringSplitOptions.None)[0],
+                    WeightInPounds = decimal.Parse(values[8])
+                };
+
+                string cityTitle = values[4].Trim();
+                if (!entities.Cities.Any(h => h.Title == cityTitle))
+                {
+                    City hometown = new City
+                    {
+                        Title = cityTitle
+                    };
+                    entities.Cities.Add(hometown);
+                    entities.SaveChanges();
+                    participant.CityId = hometown.Id;
+                }
+                else
+                {
+                    participant.CityId = entities.Cities.First(c => c.Title == cityTitle).Id;
+                }
+
+                string clubTitle = values[7].Trim();
+                if (!entities.SportsClubs.Any(c => c.Title == clubTitle))
+                {
+                    SportsClub club = new SportsClub
+                    {
+                        Title = clubTitle
+                    };
+                    entities.SportsClubs.Add(club);
+                    entities.SaveChanges();
+                    participant.SportsClubId = club.Id;
+                }
+                else
+                {
+                    participant.SportsClubId = entities.SportsClubs.First(s => s.Title == clubTitle).Id;
+                }
+
+                entities.Participants.Add(participant);
+                entities.SaveChanges();
+            }
+        }
+
+        private ImportResult ParseCommaSeparatedFile(string fileName)
+        {
+            string[] lines = File.ReadAllLines(fileName);
+
+            int recordsCount = lines.Length;
+            int importedRecordsCount = 0;
+
+            foreach (string line in lines)
+            {
+                try
+                {
+                    ExtractValuesFromCommaFile(line);
+                    ++importedRecordsCount;
+                }
+                catch (Exception)
+                {
+                    continue;
+                }
+            }
+            return new ImportResult
+            {
+                RecordsCount = recordsCount,
+                ImportedRecordsCount = importedRecordsCount
+            };
+        }
+
+        private static void ExtractValuesFromCommaFile(string line)
         {
             using (JudoBaseEntities entities = new JudoBaseEntities())
             {
