@@ -1,4 +1,6 @@
-﻿using JudoDesktopApp.ViewModels;
+﻿using JudoDesktopApp.Models.Entities;
+using JudoDesktopApp.ViewModels;
+using System;
 using System.Windows;
 using System.Windows.Media;
 
@@ -12,6 +14,19 @@ namespace JudoDesktopApp
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+
+            try
+            {
+                using (JudoBaseEntities entities = new JudoBaseEntities())
+                {
+                    entities.Database.Connection.Open();
+                }
+            }
+            catch (Exception)
+            {
+                ViewModelBase.MessageBox.Inform("База данных недоступна, исправьте строку подключения в App.config");
+                Environment.Exit(0);
+            }
 
             NavigationWindow navigationWindow = new NavigationWindow()
             {
