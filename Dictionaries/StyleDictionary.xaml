@@ -49,6 +49,8 @@
                 Value="Center" />
         <Setter Property="Validation.ErrorTemplate"
                 Value="{StaticResource ErrorTemplate}" />
+        <Setter Property="ToolTip"
+                Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors).CurrentItem.ErrorContent}" />
     </Style>
     <Style TargetType="PasswordBox">
         <Setter Property="VerticalContentAlignment"
@@ -58,11 +60,15 @@
            BasedOn="{StaticResource {x:Type FrameworkElement}}">
         <Setter Property="Validation.ErrorTemplate"
                 Value="{StaticResource ErrorTemplate}" />
+        <Setter Property="ToolTip"
+                Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors).CurrentItem.ErrorContent}" />
     </Style>
     <Style TargetType="Button"
            BasedOn="{StaticResource {x:Type FrameworkElement}}">
         <Setter Property="Background"
                 Value="{StaticResource BaseColor}" />
+        <Setter Property="ToolTip"
+                Value="{Binding RelativeSource={RelativeSource Self}, Path=Content}" />
     </Style>
     <Style TargetType="Image"
            BasedOn="{StaticResource {x:Type FrameworkElement}}" />
