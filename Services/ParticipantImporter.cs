@@ -1,10 +1,13 @@
 ﻿using JudoDesktopApp.Models.Entities;
 using JudoDesktopApp.Models.Import;
+using JudoDesktopApp.ViewModels;
 using Microsoft.Win32;
 using System;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace JudoDesktopApp.Services
 {
@@ -48,7 +51,87 @@ namespace JudoDesktopApp.Services
 
         private ImportResult ParseExcelFile(string fileName)
         {
-            throw new NotImplementedException();
+            ImportResult importResult = new ImportResult();
+
+            Excel.Application app = null;
+            Excel.Workbook workbook = null;
+            try
+            {
+                app = new Excel.Application();
+                workbook = app.Workbooks.Open(fileName);
+                Excel.Worksheet sheet = workbook.Sheets[1];
+                using (JudoBaseEntities entities = new JudoBaseEntities())
+                {
+                    importResult.RecordsCount = sheet.Rows.Count - 4;
+                    for (int i = 5; i < sheet.Rows.Count; i++)
+                    {
+                        try
+                        {
+                            Participant participant = new Participant
+                            {
+                                LastName = (sheet.UsedRange.Cells[i, 2] as Excel.Range).Value.Trim(),
+                                FirstName = (sheet.UsedRange.Cells[i, 3] as Excel.Range).Value.Trim(),
+                                GenderId = int.Parse((sheet.UsedRange.Cells[i, 4] as Excel.Range).Value).Trim(),
+                                BirthDate = DateTime.ParseExact((sheet.UsedRange.Cells[i, 5] as Excel.Range).Value.Trim(), "dd/MM/yyyy", CultureInfo.InvariantCulture),
+                                PostCode = (sheet.UsedRange.Cells[i, 8] as Excel.Range).Value.Trim(),
+                                WeightInPounds = decimal.Parse((sheet.UsedRange.Cells[i, 11] as Excel.Range).Value.Trim())
+                            };
+
+                            string cityTitle = (sheet.UsedRange.Cells[i, 5] as Excel.Range).Value.Trim();
+                            if (!entities.Cities.Any(h => h.Title == cityTitle))
+                            {
+                                City hometown = new City
+                                {
+                                    Title = cityTitle
+                                };
+                                entities.Cities.Add(hometown);
+                                entities.SaveChanges();
+                                participant.CityId = hometown.Id;
+                            }
+                            else
+                            {
+                                participant.CityId = entities.Cities.First(c => c.Title == cityTitle).Id;
+                            }
+
+                            string clubTitle = (sheet.UsedRange.Cells[i, 10] as Excel.Range).Value.Trim();
+                            if (!entities.SportsClubs.Any(c => c.Title == clubTitle))
+                            {
+                                SportsClub club = new SportsClub
+                                {
+                                    Title = clubTitle
+                                };
+                                entities.SportsClubs.Add(club);
+                                entities.SaveChanges();
+                                participant.SportsClubId = club.Id;
+                            }
+                            else
+                            {
+                                participant.SportsClubId = entities.SportsClubs.First(s => s.Title == clubTitle).Id;
+                            }
+
+                            entities.Participants.Add(participant);
+                            entities.SaveChanges();
+                            ++importResult.ImportedRecordsCount;
+                        }
+                        catch (Exception)
+                        {
+                            continue;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewModelBase.MessageBox.Inform("Ошибка: " + ex.ToString());
+            }
+            finally
+            {
+                if (workbook != null)
+                    workbook.Close(SaveChanges: false);
+                if (app != null)
+                    app.Quit();
+            }
+            return importResult;
         }
 
         private ImportResult ParseSemicolonSeparatedFile(string fileName)
