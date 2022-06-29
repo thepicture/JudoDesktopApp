@@ -12,10 +12,12 @@
              d:DesignWidth="800">
     <UniformGrid Rows="3"
                  Columns="2"
-                 VerticalAlignment="Center">
+                 VerticalAlignment="Center"
+                 FocusManager.FocusedElement="{Binding ElementName=UserNameBox}">
         <TextBlock Text="Имя пользователя" />
         <TextBox Text="{Binding User.UserName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                 MaxLength="128" />
+                 MaxLength="128"
+                 Name="UserNameBox" />
         <TextBlock Text="Пароль" />
         <controls:BindablePasswordBox BindablePassword="{Binding User.PlainPassword, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                       MaxLength="128" />
